@@ -1,0 +1,122 @@
+<%- include('../layout/boilerplate') %>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+  <!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/">Coupon</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-light px-3" href="/admin/login"
+              >Admin Login</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Spacing for fixed navbar -->
+  <div class="mt-5 pt-4"></div>
+
+  <div class="d-flex align-items-center justify-content-center flex-grow-1">
+    <div
+      class="card shadow-lg p-4 rounded-lg fade-in"
+      style="max-width: 400px; width: 100%"
+    >
+      <h1 class="text-center mb-4 text-primary fw-bold">Admin Login</h1>
+      <form action="/admin/login" method="POST">
+        <div class="mb-3">
+          <label for="username" class="form-label fw-semibold">Username:</label>
+          <input
+            type="text"
+            class="form-control animate-input"
+            id="username"
+            name="username"
+            required
+            placeholder="Enter username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label fw-semibold">Password:</label>
+          <input
+            type="password"
+            class="form-control animate-input"
+            id="password"
+            name="password"
+            required
+            placeholder="Enter password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100 animate-btn">
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    /* Smooth fade-in animation */
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Input field hover effect */
+    .animate-input {
+      transition: all 0.3s ease-in-out;
+      border-radius: 8px;
+    }
+    .animate-input:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 8px rgba(13, 110, 253, 0.4);
+    }
+
+    /* Button hover effect */
+    .animate-btn {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+      border-radius: 8px;
+    }
+    .animate-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Rounded corners for card */
+    .rounded-lg {
+      border-radius: 12px;
+    }
+
+    /* Responsive spacing */
+    @media (max-width: 768px) {
+      .mt-5 {
+        margin-top: 80px !important;
+      }
+    }
+  </style>
+</body>

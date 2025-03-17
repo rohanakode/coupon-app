@@ -1,0 +1,110 @@
+<%- include('../layout/boilerplate') %>
+
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="/admin/dashboard">Coupon Admin</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin/dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-danger text-white px-3" href="/admin/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+      <h2 class="mt-4">Add New Coupon</h2>
+      <form action="/admin/add-coupon" method="POST" class="mb-4">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="code"
+            name="code"
+            placeholder="Enter Coupon Code"
+            required
+          />
+          <button type="submit" class="btn btn-primary">Add Coupon</button>
+        </div>
+      </form>
+
+      <h2 class="mt-4">Coupons</h2>
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="table-dark text-center">
+            <tr>
+              <th>Code</th>
+              <th>Status</th>
+              <th>Claimed By</th>
+              <th>Claimed At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <% coupons.forEach(coupon => { %>
+            <tr>
+              <td><%= coupon.code %></td>
+              <td>
+                <span class="badge <%= coupon.status === 'Available' ? 'bg-success' : 'bg-warning' %>">
+                  <%= coupon.status %>
+                </span>
+              </td>
+              <td><%= coupon.claimedBy || 'N/A' %></td>
+              <td><%= coupon.claimedAt ? coupon.claimedAt.toLocaleString() : 'N/A' %></td>
+              <td>
+                <form action="/admin/toggle-coupon/<%= coupon._id %>" method="POST" class="d-inline">
+                  <button type="submit"
+                    class="btn btn-sm <%= coupon.status === 'Available' ? 'btn-warning' : 'btn-success' %>">
+                    <%= coupon.status === 'Available' ? 'Disable' : 'Enable' %>
+                  </button>
+                </form>
+                <form action="/admin/delete-coupon/<%= coupon._id %>" method="POST" class="d-inline ms-2">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <nav>
+        <ul class="pagination justify-content-center">
+          <% if (currentPage > 1) { %>
+            <li class="page-item">
+              <a class="page-link" href="/admin/dashboard?page=<%= currentPage - 1 %>">Previous</a>
+            </li>
+          <% } %>
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+              <a class="page-link" href="/admin/dashboard?page=<%= i %>"><%= i %></a>
+            </li>
+          <% } %>
+          <% if (currentPage < totalPages) { %>
+            <li class="page-item">
+              <a class="page-link" href="/admin/dashboard?page=<%= currentPage + 1 %>">Next</a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
